@@ -10,6 +10,8 @@ var users = require('./routes/users');
 var birds = require('./public/javascripts/birds');
 var basic = require('./public/javascripts/basic');
 
+var raiders = require('./routes/raiders');
+
 var app = express();
 
 // Register ejs as .html. If we did
@@ -86,6 +88,13 @@ app.use(function(req, res, next) {
 //        error: {}
 //    });
 //});
+
+//Implementing REST API for Mongodb
+app.get('/raiders', raiders.findAll);
+app.get('/raiders/:id', raiders.findById);
+app.post('/raiders', raiders.addWine);
+app.put('/raiders/:id', raiders.updateWine);
+app.delete('/raiders/:id', raiders.deleteWine);
 
 
 module.exports = app;
