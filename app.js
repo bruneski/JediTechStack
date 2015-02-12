@@ -5,14 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-var birds = require('./public/javascripts/birds');
-var basic = require('./public/javascripts/basic');
-
+var routes = require('./routes');
 var raiders = require('./routes/raiders');
+var index = require('./routes/index');
+var router = express.Router();
 
 var app = express();
+
+console.log(raiders);
 
 // Register ejs as .html. If we did
 // not call this, we would need to
@@ -51,12 +51,17 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public/markup')));
 
-app.use('/', routes);
-app.use('/users', users);
-app.use('/birds', birds);
-app.use('/basic', basic);
+//app.get('/', routes);
+//app.get('/raiders', raiders);
+
+//router.get('/', function(req, res) {
+//    res.json({message: 'hooray! welcome to our api!'})
+//})
+
+app.use('/', raiders);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -90,11 +95,11 @@ app.use(function(req, res, next) {
 //});
 
 //Implementing REST API for Mongodb
-app.get('/raiders', raiders.findAll);
-app.get('/raiders/:id', raiders.findById);
-app.post('/raiders', raiders.addWine);
-app.put('/raiders/:id', raiders.updateWine);
-app.delete('/raiders/:id', raiders.deleteWine);
+//app.use('/raiders', raiders.findAll)();
+//app.use('/raiders/:id', raiders.findById)();
+//app.post('/raiders', raiders.addWine);
+//app.put('/raiders/:id', raiders.updateWine);
+//app.delete('/raiders/:id', raiders.deleteWine);
 
 
 module.exports = app;
