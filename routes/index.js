@@ -6,9 +6,9 @@ var router = express.Router();
 //    res.send([{name:'raider1'}, {name:'raider2'}, {name:'raider3'}]);
 //};
 //
-//exports.findById = function(req, res) {
-//    res.send({id:req.params.id, name: "The Name", description: "description"});
-//};
+var findById = router.get(function(req, res) {
+    res.send({id:req.params.id, name: "The Name", description: "description"});
+})
 
 router.get('/', function(req, res) {
     res.json({message: 'hooray! welcome to our api!'})

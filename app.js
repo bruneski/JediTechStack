@@ -10,6 +10,9 @@ var raiders = require('./routes/raiders');
 var index = require('./routes/index');
 var router = express.Router();
 
+var mongo = require('mongoskin');
+var db = mongo.db("mongodb://localhost:27017/testing", {native_parser:true});
+
 var app = express();
 
 console.log(raiders);
@@ -53,14 +56,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public/markup')));
 
-//app.get('/', routes);
-//app.get('/raiders', raiders);
+// Make our db accessible to our router
+app.use(function(req,res,next){
+    req.db = db;
+    next();
+});
 
-//router.get('/', function(req, res) {
-//    res.json({message: 'hooray! welcome to our api!'})
-//})
+app.get('/', routes);
+app.use('/raiders', raiders);
 
-app.use('/', raiders);
+router.get('/hello/:name', function(req, res) {
+    res.send('hello ' + req.params.name + '!');
+});
 
 
 // catch 404 and forward to error handler
@@ -95,7 +102,7 @@ app.use(function(req, res, next) {
 //});
 
 //Implementing REST API for Mongodb
-//app.use('/raiders', raiders.findAll)();
+
 //app.use('/raiders/:id', raiders.findById)();
 //app.post('/raiders', raiders.addWine);
 //app.put('/raiders/:id', raiders.updateWine);

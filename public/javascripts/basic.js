@@ -2,26 +2,19 @@
  * Created by mbrune on 1/26/15.
  */
 
-var express = require('express')
-var app = express.Router();
+var AppRouter = Backbone.Router.extend({
 
-// middleware specific to this router
-app.use(function timeLog(req, res, next) {
-    console.log('Time in Basic: ', Date.now());
-    next();
-})
+    routes: {
+        "": "testview"
+    },
 
-app.get('/', function (req, res) {
-    res.send('Hello World!')
-})
+    initialize: function () {
+        this.mainView = new TestView();
+        $('#raidTeamSection').html(this.mainView.el);
+    }
+});
 
-//var server = app.listen(3000, function () {
-//
-//    var host = server.address().address
-//    var port = server.address().port
-//
-//    console.log('Example app listening at http://%s:%s', host, port)
-//
-//})
-
-module.exports = app;
+global.loadTemplate(['TestView'], function() {
+    app = new AppRouter();
+    Backbone.history.start();
+});
