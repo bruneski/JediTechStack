@@ -5,17 +5,14 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes');
 var raiders = require('./routes/raiders');
-var index = require('./routes/index');
 var router = express.Router();
 
 var mongo = require('mongoskin');
+//Specify which DB I am going to use
 var db = mongo.db("mongodb://localhost:27017/testing", {native_parser:true});
 
 var app = express();
-
-console.log(raiders);
 
 // Register ejs as .html. If we did
 // not call this, we would need to
@@ -32,7 +29,7 @@ app.engine('.html', require('ejs').__express);
 
 // Optional since express defaults to CWD/views
 
-app.set('views', __dirname + '/public/markup/');
+app.set('views', __dirname + '/public');
 
 // Without this you would need to
 // supply the extension to res.render()
@@ -54,7 +51,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public/markup')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to our router
 app.use(function(req,res,next){
@@ -62,11 +59,10 @@ app.use(function(req,res,next){
     next();
 });
 
-app.get('/', routes);
 app.use('/raiders', raiders);
 
-router.get('/hello/:name', function(req, res) {
-    res.send('hello ' + req.params.name + '!');
+router.get('/', function(req, res) {
+    res.render("index.html");
 });
 
 

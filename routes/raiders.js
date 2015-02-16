@@ -59,6 +59,64 @@ router.get('/raidlist/:name', function(req, res) {
     });
 });
 
+router.post('/raidlist/#addRaider', function(req, res) {
+    console.log("Add Raider Route Trigger");
+    var newRaider = req.body;
+    console.log('Adding raider: ' + JSON.stringify(newRaider));
+    db.collection('raidTeam', function(err, collection) {
+        collection.insert(newRaider, {safe:true}, function(err, result) {
+            if (err) {
+                res.send({'error':'An error has occurred'});
+            } else {
+                console.log('Success: ' + JSON.stringify(result[0]));
+                res.send(result[0]);
+            }
+        });
+    });
+});
+
+router.put('/raidlist/#updateRaider',  function(req, res) {
+    var id = req.params.id;
+    var raider = req.body;
+    delete raider.name;
+    console.log('Updating wine: ' + id);
+    console.log(JSON.stringify(raider));
+    db.collection('raidTeam', function(err, collection) {
+        collection.update({'name': req.params.name}, raider, {safe:true}, function(err, result) {
+            if (err) {
+                console.log('Error updating wine: ' + err);
+                res.send({'error':'An error has occurred'});
+            } else {
+                console.log('' + result + ' document(s) updated');
+                res.send(raider);
+            }
+        });
+    });
+});
+
+router.delete('/raidlist/#deleteRaider',  function(req, res) {
+    var name = req.params.name;
+    console.log('Deleting raider: ' + id);
+    db.collection('raidTeam', function(err, collection) {
+        collection.remove({'name' : name}, {safe:true}, function(err, result) {
+            if (err) {
+                res.send({'error':'An error has occurred - ' + err});
+            } else {
+                console.log('' + result + ' document(s) deleted');
+                res.send(req.body);
+            }
+        });
+    });
+});
+
+// DOM Ready =============================================================
+//$(document).ready(function() {
+//
+//    // Populate the user table on initial page load
+//    populateTable();
+//
+//});
+
 //router.get('/', function(req, res) {
 //    res.json({message: 'hooray! welcome to our api!'})
 //})
@@ -106,4 +164,29 @@ var populateDB = function() {
         collection.insert(raidTeam, {safe:true}, function(err, result) {});
     });
 
+};
+
+// Fill table with data
+var populateTable = function() {
+
+    // Empty content string
+    var tableContent = '';
+
+    // jQuery AJAX call for JSON
+    $.getJSON( '/raiders/raidlist', function( data ) {
+
+        // For each item in our JSON, add a table row and cells to the content string
+        $.each(data, function(){
+            tableContent += '<tr>';
+            tableContent += '<td>' + this.name + '</td>';
+            tableContent += '<td>' + this.lvl + '</td>';
+            tableContent += '<td>' + this.class + '</td>';
+            tableContent += '<td>' + this.spec + '</td>';
+            tableContent += '<td>Delete</td>';
+            tableContent += '</tr>';
+        });
+
+        // Inject the whole content string into our existing HTML table
+        $('#raidList table tbody').html(tableContent);
+    });
 };

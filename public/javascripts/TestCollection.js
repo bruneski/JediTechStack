@@ -3,7 +3,7 @@
  */
 
 TestCollection = Backbone.Collection.extend({
-    model: TestModel,
+    model: Raider,
     url: 'http://localhost:3000/raiders/',
 
     initialize: function(){

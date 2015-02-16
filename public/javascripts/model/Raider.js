@@ -2,7 +2,7 @@
  * Created by mbrune on 2/10/15.
  */
 
-TestModel = Backbone.Model.extend ({
+Raider = Backbone.Model.extend ({
 
     initialize: function() {
         console.log("Initializing Model");

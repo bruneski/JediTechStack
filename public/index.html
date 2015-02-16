@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Express Template</title>
+    <script data-main="javascripts/boot" src="javascripts/libs/require.js"></script>
+    <script type="javascript" src="javascripts/libs/jquery-2.1.3.min.js"></script>
+    <script type="javascript" src="javascripts/libs/underscore-min.js"></script>
+    <script type="javascript" src="javascripts/libs/backbone-min.js"></script>
+    <link href="stylesheets/style.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+    <p>Here are some many things</p>
+
+    <div id="raidTeamSection">
+        <div id="wrapper">
+            <h2>Raid Team</h2>
+            <div id="raidTeamList">
+                <table>
+                    <thead>
+                        <th>Lvl</th>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>Spec</th>
+                        <th>Delete</th>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+
+
+<script type="javascript" src="javascripts/TestCollection.js"></script>
+<script type="javascript" src="javascripts/TestView.js"></script>
+<script type="javascript" src="javascripts/model/TestModel.js"></script>
+
+<script type="javascript" src="../routes/raiders.js"></script>
+<script type="javascript" src="javascripts/basic.js"></script>
+<script type="javascript" src="javascripts/global.js"></script>
+
+<!--<script>-->
+
+        <!--// Empty content string-->
+        <!--var tableContent = '';-->
+        <!--console.log($.getJSON('/raiders/raidlist'));-->
+        <!--// jQuery AJAX call for JSON-->
+        <!--$.getJSON( '/raiders/raidlist', function( data ) {-->
+
+            <!--// For each item in our JSON, add a table row and cells to the content string-->
+            <!--$.each(data, function(){-->
+                <!--tableContent += '<tr>';-->
+                <!--tableContent += '<td>' + this.name + '</td>';-->
+                <!--tableContent += '<td>' + this.lvl + '</td>';-->
+                <!--tableContent += '<td>' + this.class + '</td>';-->
+                <!--tableContent += '<td>' + this.spec + '</td>';-->
+                <!--tableContent += '<td>Delete</td>';-->
+                <!--tableContent += '</tr>';-->
+            <!--});-->
+
+            <!--// Inject the whole content string into our existing HTML table-->
+            <!--$('#raidList table tbody').html(tableContent);-->
+        <!--});-->
+
+<!--</script>-->
+
+</html>
