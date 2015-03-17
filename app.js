@@ -4,8 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var timeout = require('connect-timeout');
 
-var raiders = require('./routes/raiders');
+var raiders = require('./routes/raiders.js');
 var router = express.Router();
 
 var mongo = require('mongoskin');
@@ -65,6 +66,20 @@ router.get('/', function(req, res) {
     res.render("index.html");
 });
 
+app.get('/slow-request', timeout('1s'), function(req, res, next) {
+    setTimeout(function () {
+            if (req.timedout) {
+                return false;
+            }
+            return next();
+    },
+        999 + Math.round(Math.random()));
+},
+        function(req, res, next) {
+            res.send('ok');
+        }
+    );
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -104,5 +119,6 @@ app.use(function(req, res, next) {
 //app.put('/raiders/:id', raiders.updateWine);
 //app.delete('/raiders/:id', raiders.deleteWine);
 
+app.listen(3000);
 
 module.exports = app;

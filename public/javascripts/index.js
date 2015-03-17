@@ -1,7 +1,7 @@
 /**
  * Created by mbrune on 2/10/15.
  */
-define(['text!../index.html'], function(indexTemplate) {
+define(['text!./index.js'], function(indexTemplate) {
     var indexView = Backbone.View.extend ({
         el: $('#raidTeamSection'),
 
