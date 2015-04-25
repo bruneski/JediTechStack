@@ -3,10 +3,10 @@
  */
 require.config({
     paths: {
-        jquery: '/libs/jquery-2.1.3.min',
-        Underscore: '/libs/underscore-min',
-        Backbone: '/libs/backbone-min',
-        templates: 'templates'
+        jquery: 'libs/jquery-2.1.3.min',
+        Underscore: 'libs/underscore-min',
+        Backbone: 'libs/backbone-min',
+        templates: '../templates'
     },
 
     shim: {

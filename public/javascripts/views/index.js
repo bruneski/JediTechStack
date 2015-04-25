@@ -1,7 +1,7 @@
 /**
  * Created by mbrune on 2/10/15.
  */
-define(['text!../index.html'], function(indexTemplate) {
+define(['/../index.html'], function(indexTemplate) {
     var indexView = Backbone.View.extend ({
         el: $('#raidTeamSection'),
 
@@ -11,10 +11,6 @@ define(['text!../index.html'], function(indexTemplate) {
 
         render: function(){
             this.$el.html(indexTemplate);
-        },
-
-        alertBook: function(e){
-            alert('Book clicked');
         }
 
     });

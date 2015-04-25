@@ -4,13 +4,19 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+
+var Raider = require('./public/javascripts/model/Raider.js')(mongoose);
 
 var raiders = require('./routes/raiders');
+//var homePage = require('./public/index.html');
 var router = express.Router();
 
 var mongo = require('mongoskin');
 //Specify which DB I am going to use
-var db = mongo.db("mongodb://localhost:27017/testing", {native_parser:true});
+//var db = mongo.db("mongodb://localhost:27017/testing", {native_parser:true});
+
+mongoose.connect("mongodb://localhost:27017/testing");
 
 var app = express();
 
@@ -61,8 +67,20 @@ app.use(function(req,res,next){
 
 app.use('/raiders', raiders);
 
-router.get('/', function(req, res) {
-    res.render("index.html");
+app.use('/', function(req, res) {
+    res.render('index');
+});
+
+router.post('/register', function(req, res) {
+    console.log(req);
+    var charName = req.params('charName', '');
+    var className = req.params('className', '');
+    var classSpec = req.params('classSpec', '');
+    var level = req.params('level', '');
+
+    console.log(Raider);
+    Raider.register(charName, className, classSpec, level);
+    res.send(200);
 });
 
 
@@ -105,4 +123,4 @@ app.use(function(req, res, next) {
 //app.delete('/raiders/:id', raiders.deleteWine);
 
 
-module.exports = app;
+app.listen(3000);

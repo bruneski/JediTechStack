@@ -1,53 +1,39 @@
 /**
  * Created by mbrune on 2/10/15.
  */
+module.exports = function (mongoose) {
 
-Raider = Backbone.Model.extend ({
+    var RaiderSchema = new mongoose.Schema({
+        charName: {type: String, unique: true, required: true},
+        className: {type: String},
+        specName: {type: String},
+        level: {type: Number, min: 1, max: 100}
+    });
 
-    initialize: function() {
-        console.log("Initializing Model");
+    var Raider = mongoose.model('Raider', RaiderSchema);
 
-        this.on("invalid", function (model, error) {
-            console.log("**Validation Error : " + error + "**");
-        });
-        this.on("change", function () {
-            console.log('Model Changes Detected:');
-            if (this.hasChanged('name')) {
-                console.log('The name has changed from ' + this.previous('name') + ' to ' + this.get('name'));
-
-            }
-            if (this.hasChanged('role')) {
-                console.log('The role has changed')
-            }
-            console.log('Changed attributes: ' + JSON.stringify(this.changed));
-            console.log('Previous attributes: ' + JSON.stringify(this.previousAttributes()));
-        });
-        this.on("change:name", function () {
-            console.log('The name attribute has changed');
-        });
-    },
-
-    defaults: {
-        name: 'SeymourButts',
-        role: 'dps',
-        lvl: 100
-    },
-
-    printDetails: function(){
-        console.log(this.get('name') + ' is a ' + this.get('lvl') + this.get('role'));
-    },
-
-    validate: function(attrs){
-        if(attrs.lvl < 100){
-            return 'You have to be lvl 100 to raid';
+    var registerCallback = function (err) {
+        if (err) {
+            return console.log(err);
         }
-        if(!attrs.name){
-            return 'You need to have a character name';
-        }
-    },
-    parse: function(response, xhr) {
-        response.bookType = 'ebook';
-        return response;
-    },
 
-});
+        return console.log('Raider was creaated');
+    };
+
+    var register = function (charName, className, spec, lvl) {
+        console.log('Registering' + charName);
+        var player = new Raider({
+            charName: charName,
+            className: className,
+            classSpec: spec,
+            level: lvl
+        });
+        player.save(registerCallback);
+        console.log("Save command was sent");
+    };
+
+    return {
+        register: register,
+        Raider: Raider
+    }
+};

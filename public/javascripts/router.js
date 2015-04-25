@@ -2,12 +2,13 @@
  * Created by mbrune on 2/15/15.
  */
 
-define(['../index.html'], function(IndexView) {
+define(['../index.html', 'views/register'], function(IndexView, RegisterView) {
     var RaidRouter = Backbone.extend.Router({
         currentView: null,
 
         routes: {
-            "index" : "index"
+            "index" : "index",
+            "register" : "register"
         },
         //Stops listening to web page events on the old view
         changeView: function(view) {
@@ -20,6 +21,10 @@ define(['../index.html'], function(IndexView) {
 
         index: function() {
             this.changeView(new IndexView());
+        },
+
+        register: function() {
+            this.changeView(new RegisterView());
         }
     });
 
